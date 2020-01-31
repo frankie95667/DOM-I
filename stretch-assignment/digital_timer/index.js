@@ -1,60 +1,96 @@
-document.querySelector('#msTens').textContent = 0;
-document.querySelector('#msHundreds').textContent = 0;
-document.querySelector('#secondOnes').textContent = 0;
-document.querySelector('#secondTens').textContent = 0;
+const digits = document.querySelector(".digits");
+const secondTens = document.getElementById("secondTens");
+const secondOnes = document.getElementById("secondOnes");
+const msHundreds = document.getElementById("msHundreds");
+const msTens = document.getElementById("msTens");
 
 let stopTimer = false;
 let timerStarted = false;
 
-function timer(msTens, msHundreds, secOnes, secTens){
-    timerStarted = true;
-    var timer = window.setInterval(function(){
-        document.querySelector('#msTens').textContent = msTens;
-        document.querySelector('#msHundreds').textContent = msHundreds;
-        document.querySelector('#secondOnes').textContent = secOnes;
-        document.querySelector('#secondTens').textContent = secTens;
-        msTens++;
-        if (!(msTens < 10)) {
-            msTens = 0;
-            msHundreds++;
-            timer(msTens, msHundreds, secOnes, secTens);
-        } else if (!(msHundreds < 10)){
-            msHundreds = 0;
-            secOnes++;
-            timer(msTens, msHundreds, secOnes, secTens);
-        } else if (!(secOnes < 10)){
-            secOnes = 0;
-            secTens++;
-            timer(msTens, msHundreds, secOnes, secTens);
-        } else if (secTens == 1){
-            document.querySelector('#msTens').textContent = 0;
-            clearInterval(timer);
-            timerStarted = false;
-            document.querySelector('.digits').style.color = 'red';
-            document.getElementById('timerButton').removeAttribute('disabled')
-        } else if (stopTimer === true){
-            stopTimer = false;
-            timerStarted = false;
-            clearInterval(timer);
-            document.querySelector('#msTens').textContent = 0;
-            document.querySelector('#msHundreds').textContent = 0;
-            document.querySelector('#secondOnes').textContent = 0;
-            document.querySelector('#secondTens').textContent = 0;
-            return;
+function timer(){
+    start();
+
+    function start(){
+        timerStarted = true;
+        let ms = 0;
+        msTens.innerHTML = "0";
+        msHundreds.innerHTML = "0";
+        secondOnes.innerHTML = "0";
+        secondTens.innerHTML = "0";
+
+        const timerInterval = window.setInterval(function(){
+            ms += 10;
+            if(ms === 10000){
+                endTimer(timerInterval);
+            } else if (stopTimer){
+                resetTimer(timerInterval);
+                return;
+            }
+            updateTimer(ms);
+        }, 10)
+    }
+
+    function increment(string){
+        let number = Number(string) + 1;
+        return number.toString();
+    }
+
+    function endTimer(intervalName){
+        clearInterval(intervalName);
+        timerStarted = false;
+        stopTimer = false;
+        document.getElementById('timerButton').removeAttribute('disabled')
+        Array.from(digits.children).forEach(function(ele){
+            ele.classList.add('redDigit');
+        })
+    }
+
+    function resetTimer(intervalName){
+        clearInterval(intervalName);
+        timerStarted = false;
+        stopTimer = false;
+        msTens.innerHTML = "0";
+        msHundreds.innerHTML = "0";
+        secondOnes.innerHTML = "0";
+        secondTens.innerHTML = "0";
+        document.getElementById('timerButton').removeAttribute('disabled')
+    }
+
+    function updateTimer(ms){
+        if(ms === 10000){
+            msTens.innerHTML = "0";
+            msHundreds.innerHTML = "0";
+            secondOnes.innerHTML = "0";
+            secondTens.innerHTML = "1";
+        } else if ( ms % 1000 === 0 ){
+            msTens.innerHTML = "0";
+            msHundreds.innerHTML = "0";
+            secondOnes.innerHTML = increment(secondOnes.innerHTML);
+        } else if ( ms % 100 === 0 ){
+            msTens.innerHTML = "0";
+            msHundreds.innerHTML = increment(msHundreds.innerHTML);
+        } else {
+            msTens.innerHTML= increment(msTens.innerHTML);
         }
-    }, 10);
+    }
+}
+    
+function resetTimer(){
+    stopTimer = true;
 }
 
 
 document.getElementById('timerButton').onclick = function runTimer(){
-    document.querySelector('.digits').style.color = 'black';
+    Array.from(digits.children).forEach(function(ele){
+        ele.classList.remove('redDigit');
+    })
     document.getElementById('timerButton').setAttribute('disabled', "");
-    timer(0,0,0,0);
+    timer();
 }
 
-document.getElementById('timerReset').onclick = function resetTimer(){
+document.getElementById('timerReset').onclick = function timerReset(){
     if (stopTimer === false && timerStarted === true){
-        stopTimer = true;
+        resetTimer();
     }
     document.getElementById('timerButton').removeAttribute('disabled')
 }
