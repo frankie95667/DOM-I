@@ -8,7 +8,7 @@ let timerStarted = false;
 
 function timer(msTens, msHundreds, secOnes, secTens){
     timerStarted = true;
-    var timer = setInterval(function(){
+    var timer = window.setInterval(function(){
         document.querySelector('#msTens').textContent = msTens;
         document.querySelector('#msHundreds').textContent = msHundreds;
         document.querySelector('#secondOnes').textContent = secOnes;
