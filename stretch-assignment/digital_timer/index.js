@@ -49,10 +49,10 @@ function timer(){
         clearInterval(intervalName);
         timerStarted = false;
         stopTimer = false;
-        msTens.innerHTML = "0";
-        msHundreds.innerHTML = "0";
-        secondOnes.innerHTML = "0";
-        secondTens.innerHTML = "0";
+        msTens.innerHTML = "-";
+        msHundreds.innerHTML = "-";
+        secondOnes.innerHTML = "-";
+        secondTens.innerHTML = "-";
         document.getElementById('timerButton').removeAttribute('disabled')
     }
 
@@ -79,11 +79,15 @@ function resetTimer(){
     stopTimer = true;
 }
 
-
-document.getElementById('timerButton').onclick = function runTimer(){
+function removeRed(){
     Array.from(digits.children).forEach(function(ele){
         ele.classList.remove('redDigit');
     })
+}
+
+
+document.getElementById('timerButton').onclick = function runTimer(){
+    removeRed();
     document.getElementById('timerButton').setAttribute('disabled', "");
     timer();
 }
@@ -91,6 +95,12 @@ document.getElementById('timerButton').onclick = function runTimer(){
 document.getElementById('timerReset').onclick = function timerReset(){
     if (stopTimer === false && timerStarted === true){
         resetTimer();
+    } else {
+        msTens.innerHTML = "-";
+        msHundreds.innerHTML = "-";
+        secondOnes.innerHTML = "-";
+        secondTens.innerHTML = "-";
+        removeRed();
     }
     document.getElementById('timerButton').removeAttribute('disabled')
 }
