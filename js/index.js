@@ -45,8 +45,23 @@ logo.setAttribute('src', siteContent["nav"]["img-src"])
 /********** Nav Section ***********/
 /**********************************/
 let navLinks = document.querySelectorAll('nav a');
+let nav = document.querySelector('nav');
+
+let home = document.createElement('a');
+let blog = document.createElement('a');
+
+blog.textContent = "Blog";
+blog.setAttribute('href', '#');
+
+home.textContent = "Home";
+home.setAttribute('href', '#');
+
+nav.prepend(home);
+nav.appendChild(blog);
+
 navLinks.forEach(function(ele, i){
   ele.append(siteContent['nav']['nav-item-' + (i + 1)]);
+  ele.style.color = "green";
 });
 
 /**********************************/
