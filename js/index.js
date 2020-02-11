@@ -40,3 +40,83 @@ const siteContent = {
 // Example: Update the img src for the logo
 let logo = document.getElementById("logo-img");
 logo.setAttribute('src', siteContent["nav"]["img-src"])
+
+/**********************************/
+/********** Nav Section ***********/
+/**********************************/
+let navLinks = document.querySelectorAll('nav a');
+let nav = document.querySelector('nav');
+
+let home = document.createElement('a');
+let blog = document.createElement('a');
+
+blog.textContent = "Blog";
+blog.setAttribute('href', '#');
+
+home.textContent = "Home";
+home.setAttribute('href', '#');
+
+nav.prepend(home);
+nav.appendChild(blog);
+
+navLinks.forEach(function(ele, i){
+  ele.append(siteContent['nav']['nav-item-' + (i + 1)]);
+  ele.style.color = "green";
+});
+
+/**********************************/
+/********** CTA Section ***********/
+/**********************************/
+// H1
+document.querySelector('.cta-text h1').append(siteContent['cta']['h1']);
+// Button
+document.querySelector('.cta-text button').append(siteContent['cta']['button']);
+// image source
+document.querySelector('.cta img').setAttribute("src", siteContent['cta']['img-src']);
+
+/**********************************/
+/****** Main Content Section ******/
+/**********************************/
+
+// top content
+// h4 tags
+let mcH4 = document.querySelectorAll('.main-content .top-content .text-content h4')
+mcH4[0].append(siteContent['main-content']['features-h4'])
+mcH4[1].append(siteContent['main-content']['about-h4'])
+// p tags
+let mcContent = document.querySelectorAll('.main-content .top-content .text-content p')
+mcContent[0].append(siteContent['main-content']['features-content'])
+mcContent[1].append(siteContent['main-content']['about-content'])
+
+// middle image
+document.querySelector('#middle-img').setAttribute('src', siteContent['main-content']['middle-img-src']);
+
+// bottom content
+//h4 tags
+let bcH4 = document.querySelectorAll('.main-content .bottom-content .text-content h4')
+bcH4[0].append(siteContent['main-content']['services-h4'])
+bcH4[1].append(siteContent['main-content']['product-h4'])
+bcH4[2].append(siteContent['main-content']['vision-h4'])
+
+// p tags
+let bcContent = document.querySelectorAll('.main-content .bottom-content .text-content p')
+bcContent[0].append(siteContent['main-content']['services-content'])
+bcContent[1].append(siteContent['main-content']['product-content'])
+bcContent[2].append(siteContent['main-content']['vision-content'])
+
+/**********************************/
+/******** Contact Section *********/
+/**********************************/
+// H4
+document.querySelector('.contact h4').append(siteContent['contact']['contact-h4']);
+
+// P
+let contactP = document.querySelectorAll('.contact p');
+contactP[0].append(siteContent['contact']['address']);
+contactP[1].append(siteContent['contact']['phone']);
+contactP[2].append(siteContent['contact']['email']);
+
+/**********************************/
+/********* Footer Section *********/
+/**********************************/
+document.querySelector('footer p').append(siteContent['footer']['copyright']);

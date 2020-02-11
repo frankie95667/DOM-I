@@ -1,12 +1,54 @@
+@font-face{
+  font-family:'digital-clock';
+  src: url('fonts/digital-7.ttf');
+ }
+
 body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#timer{
+  background: #6DCFF6;
+  color: black;
+}
+
+.digits {
+  text-align: center;
+  padding: 20px 40px;
+}
+
+.digit {
+  font-family: 'digital-clock', sans-serif;
+  display: inline-block;
+  font-size: 80px;
+  min-width: 38px;
+}
+
+.button-group {
+  display: flex;
+}
+
+.button-group button {
+  width: 50%;
+  background-color: transparent;
+  font-size: 1.2rem;
+  padding: 6px 0;
+  text-transform: uppercase;
+  border: none;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.digit {
-  display: inline-block;
-  font-size: 80px;
+button:active {
+  border: 1px solid white;
+}
+
+#colon {
+  min-width: 10px;
 }
 
 .redDigit {
